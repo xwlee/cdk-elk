@@ -1,4 +1,4 @@
-import { Stack, StackProps } from "aws-cdk-lib";
+import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as es from "aws-cdk-lib/aws-elasticsearch";
 import * as iam from "aws-cdk-lib/aws-iam";
@@ -100,6 +100,11 @@ export class CdkElkStack extends Stack {
         identityPoolId: identityPool.ref,
         role: esRole,
       },
+    });
+
+    new CfnOutput(this, "ESKibanaUrl", {
+      description: "Elastic Search Kibana Endpoint.",
+      value: `https://${domain.domainEndpoint}/_plugin/kibana/`,
     });
   }
 }
